@@ -16,12 +16,17 @@ int main(int argc, char *argv[]){
 	 */
 	int dim = 2;
 	std::string::size_type sz;
+	// CTRL input data
+	if(argc<=1){
+                fprintf(stderr,"Error you have to provide number of individuals!\n");
+                exit(EXIT_FAILURE);
+        }
 
 	int n_individuals = stoi(argv[1],&sz);
 	int n_iterations = 5000;
 	int n_followed = 7;
 
-	// CTRL input data
+
 	if( n_individuals <= n_followed){
 		fprintf(stderr,"Error nr. of individuals must be greater than followed birds\n");
 		exit(EXIT_FAILURE);

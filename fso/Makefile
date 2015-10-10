@@ -8,4 +8,5 @@ CFLAGS= -Wall -std=c++11 -O3
 all: 
 	$(CC) $(CFLAGS) -o fso_exec main.cpp fso.cpp -I./
 clean:
-	rm *o fso_exec
+	rm  fso_exec global_best.txt position1.txt  velocity.txt 
+
