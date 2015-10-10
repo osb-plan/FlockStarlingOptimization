@@ -1,0 +1,27 @@
+This code is a C++ implementation fo Flock of Starling Optimization Algorithm.
+
+To compile
+
+1) make all
+
+2) ./fso_exec
+
+3) the results are stored in the txt files.
+
+4) global_best.txt stores the global best for each iteration, in the gbp.txt you can
+   find also the coordinates of the GB
+
+5) in the postition.txt file, you find the coordinates of the whole group in the form
+   X1, Y1, X2, Y2,........Xn,Yn
+
+6) in the velocity file has been stored the velocities of all individuals it has the 
+   same codification of the position files.
+7) make clean will remove the executable file and the log files.
+   NB the files are created in append mode, so if you run multiple test without doing 
+   make clean you are appending to the same file the result of each test!
+8) For disable the log file creation comment #define DEBUG on fso.h file
+
+These files are useful to choose the right parameters for the algorithm. 
+You can graph the trajectories starting from them.
+
+
