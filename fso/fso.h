@@ -2,6 +2,7 @@
  * fso.h
  *
  *  Created on: Dec 15, 2014
+ *      Author: pulcini
  */
 #include <vector>
 #ifndef FSO_H_

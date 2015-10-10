@@ -4,7 +4,6 @@
 #include <vector>
 #include <time.h>
 #include <string>
-#include <stdlib.h>
 //#include "myfso.h"
 #include "fso.h"
 #include <omp.h>
