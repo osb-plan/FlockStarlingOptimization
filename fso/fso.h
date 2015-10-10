@@ -7,7 +7,7 @@
 #include <vector>
 #ifndef FSO_H_
 #define FSO_H_
-//#define DEBUG
+#define DEBUG
 using namespace std;
 class fso {
 public:

@@ -14,9 +14,7 @@
 #include <climits>
 #include <math.h>
 #include <omp.h>
-//fso::fso(int dim, int n_individuals, int n_iterations, vector<double> parameters, int n_followed,vector< vector<double> > domain, double max_vel) {
 void fso::set_value(int dim, int n_individuals, int n_iterations, vector<double> parameters, int n_followed,vector< vector<double> > domain, double max_vel) {
-	// TODO Auto-generated constructor stub
 	dim_ = dim;
 	n_individuals_ = n_individuals;
 	n_iterations_ = n_iterations;
@@ -141,7 +139,7 @@ bool fso::init_personal_best_values_(){
 }
 bool fso::init_personal_best_positions_(){
 	vector<double> internal (dim_, 0.0);
-	for (unsigned int j; j < n_individuals_; ++j){
+	for (unsigned int j = 0; j < n_individuals_; ++j){
 		personal_best_position_.push_back(internal);
 	}
 	return true;
@@ -171,9 +169,12 @@ bool fso::compute_personal_best_(){
 bool fso::compute_velocities_(){
 	vector< vector<double> > new_velocities;
 	vector< vector<double> > new_position = positions_;
-	for(unsigned int j = 0; j < n_individuals_ ; ++j){
+	unsigned int i,j;
+//        #pragma omp parallel shared(new_velocities,new_position) private(j,i)
+  //      #pragma omp for
+	for(j = 0; j < n_individuals_ ; ++j){
 		vector<double> par;
-		for(unsigned int i = 0; i < dim_; ++i){
+		for(i = 0; i < dim_; ++i){
 			////cout << "J= " << j << endl;
 			////cout << "I= " << i << endl;
 			double par;
@@ -211,7 +212,7 @@ bool fso::compute_velocities_(){
 		////cout << "DEBUG 33 fuori" << endl;
 
 }
-
+	return true;
 }
 
 
@@ -264,16 +265,10 @@ double fso::compute_fitness_(vector<double> vec){
 }
 
 void fso::debug(){
-	  ofstream position1,position2,
-	  position3,
-	  position4,
-	  position5,velocity, global_best,gbp;
+	  ofstream position1,velocity, global_best,gbp;
 
 	  position1.open ("position1.txt",ios::app);
-	  position2.open ("position2.txt",ios::app);
-	  position3.open ("position3.txt",ios::app);
-	  position4.open ("position4.txt",ios::app);
-	  position5.open ("position5.txt",ios::app);
+
 	  gbp.open ("gbp.txt",ios::app);
 	  velocity.open ("velocity.txt",ios::app);
 	  global_best.open("global_best.txt",ios::app);
@@ -282,39 +277,17 @@ void fso::debug(){
 		  position1 << positions_.at(i)[0] << " " << positions_.at(i)[1] << " " ;
 	  }
 	  position1 << endl;
-	  gbp <<  global_best_position_.at(0) << " " <<  global_best_position_.at(1);
-	  gbp << endl;
-//position << positions_.at(7)[0] << " " << positions_.at(7)[1] ;
-//		for(unsigned int i = 0; i < n_individuals_; ++i){
-//					position << positions_.at(i)[0] << " ";
-//					//cout << positions_.at(i)[0] << " ";
-//
-//		}
-//		for(unsigned int i = 0; i < n_individuals_; ++i){
-//					position << positions_.at(i)[1] << " ";
-//					//cout << positions_.at(i)[1] << " ";
-//
-//		}
-		//position << endl;
-		/*for(unsigned int i = 0; i < n_individuals_; ++i){
-				velocity << velocities_.at(i)[0] << " ";
-				//cout << velocities_.at(i)[0] << " ";
-		}*/
-	  /*for(unsigned int y =0; y < n_individuals_; ++y){
-		  for(unsigned int d =0; d < n_followed_; ++d){
-			  //cout << matrix_interconnection_.at(y)[d] << " ";
-		  }
-		  //cout << endl;
-	  }*/
+
+	  gbp <<  global_best_position_.at(0) << " " <<  global_best_position_.at(1) << " ";
+	  gbp << global_best_value_ << endl;
+
+	  for(unsigned int i=0; i < n_individuals_; ++i){
+		  velocity << velocities_.at(i)[0] << " " << velocities_.at(i)[1] << " " ;
+	  }
 		velocity << endl;
 		global_best << global_best_value_ << endl;
 
 		global_best.close();
-		position1.close();
-		position2.close();
-		position3.close();
-		position4.close();
-		position5.close();
 		velocity.close();
 		gbp.close();
 }
